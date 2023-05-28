@@ -14,7 +14,6 @@ def play(bytesData):
     pydub.playback.play(sound)
     return
       
-
 def main():
     load_dotenv()
 
