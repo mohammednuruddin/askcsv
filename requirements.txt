@@ -2,3 +2,4 @@ streamlit
 langchain
 tabulate
 python-dotenv
+pydub
