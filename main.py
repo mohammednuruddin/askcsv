@@ -24,6 +24,7 @@ def main():
     basePath = os.getenv("GPT_BASE")
     key = os.getenv("OPENAI_API_KEY")
 
+
     if file:
         llm = OpenAI(openai_api_key=key, openai_api_base=basePath)
         user_input = st.text_input('Question here:')
@@ -34,9 +35,9 @@ def main():
                 response_ = requests.post('https://api.pawan.krd/tts', json={'text': response, 'voice': 'adam'})
                 audio_data = response_.content
 
-                play(audio_data)
-
                 st.write(response)
+
+                play(audio_data)
 
 if __name__ == "__main__":
     main()
