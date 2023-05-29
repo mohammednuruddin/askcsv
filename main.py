@@ -1,5 +1,6 @@
 import os
 import requests
+import tempfile
 import streamlit as st
 from langchain.agents import create_csv_agent
 from langchain.llms import OpenAI
@@ -24,11 +25,16 @@ def main():
     basePath = os.getenv("GPT_BASE")
     key = os.getenv("OPENAI_API_KEY")
 
-
     if file:
-        llm = OpenAI(openai_api_key=key, openai_api_base=basePath)
+        print(file.name)
+        llm = OpenAI(temperature=0, openai_api_key=key, openai_api_base=basePath)
         user_input = st.text_input('Question here:')
-        agent = create_csv_agent(llm, file, verbose=True)
+
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            tmp_file.write(file.read())
+            tmp_path = tmp_file.name
+
+        agent = create_csv_agent(llm, tmp_path, verbose=True)
         if user_input:
             response = agent.run(user_input)
             if response:
